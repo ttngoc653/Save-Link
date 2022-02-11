@@ -118,7 +118,7 @@ $(document).ready(function () {
 	}
 });
 
-$(document).on("keyup", 'input', function(e) {
+$(document).on("keyup", 'input#inputSearch', function(e) {
 	let keyword = $(this).val();
 
 	$('.card').each(function(i, obj) {
