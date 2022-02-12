@@ -1,0 +1,15 @@
+.pin_container {
+ margin: auto;
+ padding: 0;
+ width: 100%;
+ left: 50%;
+ display: grid;
+ grid-template-columns: repeat(auto-fill, 17rem);
+ grid-auto-rows: 10px;
+ justify-content: center;
+}
+
+.custom_card {
+ margin: 1%;
+ grid-row-end: auto;
+}

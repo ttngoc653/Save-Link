@@ -68,7 +68,7 @@ $(document).ready(function () {
 	let vAction = getParameterValue(constParamAct);
 	let vDetail = getParameterValue(constParamDetail);
 
-	if (vAction !== null) {
+	if (Boolean(vAction)) {
 		$.ajax({
 			url: './API/GetContentFunction.php',
 			type: 'POST',
@@ -81,28 +81,12 @@ $(document).ready(function () {
 			}
 		});
 	} else {
-		var content = document.getElementById("listFilm").innerHTML;
-		document.getElementById("listFilm").innerHTML = "";
 		$.ajax({
-			url: 'API/Link_GetAll.php',
+			url: './view/ShowList.php',
 			type: 'POST'
 		}).done(function(result) {
-			$.each(JSON.parse(result), function(index, value) {
-				$.ajax({
-					url: 'view/ItemLink.php',
-					type: 'POST',
-					data: {
-						title: value['name'], 
-						image: value['image'], 
-						actor: value['actor'], 
-						country: value['country'], 
-						date: value['datetime_add']
-					}
-				}).done(function(result) {
-					document.getElementById("listFilm").innerHTML += result;
-				});
-			});
-			//document.getElementById("listFilm").innerHTML += getShowDetailItem();
+				$('div#content').empty();
+				$('div#content').html(result);
 		});
 	}
 	$.ajax({
@@ -121,11 +105,21 @@ $(document).ready(function () {
 $(document).on("keyup", 'input#inputSearch', function(e) {
 	let keyword = $(this).val();
 
-	$('.card').each(function(i, obj) {
+	$('.custom_card').each(function(i, obj) {
 		$(obj).show();
 
-	    if($(obj).children(".card-body").text().toLowerCase().search(keyword.toLowerCase()) == -1) {
+	    if($(obj).children(".card").text().toLowerCase().search(keyword.toLowerCase()) == -1) {
 			$(obj).hide();
 	    }
 	});
 });
+
+function ResizeItem() {
+  	$('.custom_card').each(function(i, obj) {
+			var aheight = $(obj).children(".card").css("height");
+			var valueGridRowEnd = parseInt(parseInt(aheight) / 10) + 1;
+			$(obj).css("grid-row-end", "span "+ valueGridRowEnd);
+	});
+}
+
+setInterval(ResizeItem, 1000);
